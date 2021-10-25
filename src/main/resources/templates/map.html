@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/header :: header"></head>
+<head>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script th:inline="javascript">
+        google.load('visualization', '1', {'packages': ['geochart']});
+        google.setOnLoadCallback(drawMap);
+
+        function drawMap() {
+            var data = new google.visualization.DataTable();
+            data.addRows([(${map.numberOfCountries})]);
+            data.addColumn('string', 'Country');
+            data.addColumn('number', 'Been');
+
+            var countries = /*[[${map.countries}]]*/ null;
+            for(var i = 0, size = countries.length; i < size ; i++) {
+                var country = countries[i];
+			    data.setValue(i, 0, country);
+			    data.setValue(i, 1, 200);
+            }
+
+            var options = {
+                region: 'world',
+                dataMode: 'regions',
+                legend: 'none',
+                colorAxis: {colors: ['red', 'yellow']}
+            };
+
+            var container = document.getElementById('map_canvas');
+            var geomap = new google.visualization.GeoChart(container);
+            geomap.draw(data, options);
+        };
+
+  </script>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu">&nbsp;</div>
+<div id='map_canvas' style="width: 1020px; height: 600px;"></div>
+</body>
+</html>

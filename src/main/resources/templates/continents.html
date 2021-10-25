@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">&nbsp;</head>
+<body>
+<div th:replace="fragments/menu :: menu">&nbsp;</div>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div>
+                <h2 class="my-5">Most visits</h2>
+                <table class="table table-striped table-responsive-md">
+                    <thead>
+                    <tr>
+                        <th>Continents</th>
+                        <th>Summary</th>
+                        <th>Countries</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="continentRow : ${continents}">
+                            <td th:text="${continentRow.continent}"></td>
+                            <td th:text="${continentRow.summary()}"></td>
+                            <td>
+                                <div th:each="country : ${continentRow.visitedCountries}">
+                                    <img th:src="@{${'/images/countries/' + country.country + '.png'}}"/>
+                                    <span th:if="${country.visited}"><b th:text="${country.country}"></b></span>
+                                    <span th:unless="${country.visited}" th:text="${country.country}"></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
