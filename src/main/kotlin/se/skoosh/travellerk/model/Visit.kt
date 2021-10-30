@@ -4,19 +4,20 @@ import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDate
 import java.time.Year
 import java.time.temporal.ChronoUnit
-import java.time.temporal.TemporalAdjuster
 import java.time.temporal.TemporalAdjusters
 
 @Table
-data class Visit(@Id val id: Int, val country: Int,
+data class Visit(@Id val id: Int = 0, val country: Int,
                  val startDay: Int, val startMonth: Int, val startYear: Int,
                  val endDay: Int, val endMonth: Int, val endYear: Int
                  )
 {
-    fun startDate() = dateToString(startYear, startMonth, startDay);
+    fun isInThePast() = LocalDate.now().toString() > startDate()
+
+    fun startDate() = dateToString(startYear, startMonth, startDay)
     fun startLocalDate(): LocalDate = LocalDate.parse(startDate())
 
-    fun endDate() = dateToString(endYear, endMonth, endDay);
+    fun endDate() = dateToString(endYear, endMonth, endDay)
     fun endLocalDate(): LocalDate = LocalDate.parse(endDate())
 
     fun visitLength() = when {
@@ -32,12 +33,12 @@ data class Visit(@Id val id: Int, val country: Int,
     }
 
     private fun maxStart(year: Int): LocalDate {
-        val firstDayOfYear = Year.of(year).atDay(1);
+        val firstDayOfYear = Year.of(year).atDay(1)
         return if (firstDayOfYear.isAfter(startLocalDate())) firstDayOfYear else startLocalDate()
     }
 
     private fun minEnd(year: Int): LocalDate {
-        val lastDayOfYear = Year.of(year).atDay(1).with(TemporalAdjusters.lastDayOfYear());
+        val lastDayOfYear = Year.of(year).atDay(1).with(TemporalAdjusters.lastDayOfYear())
         return if (lastDayOfYear.isBefore(endLocalDate())) lastDayOfYear else endLocalDate()
     }
 

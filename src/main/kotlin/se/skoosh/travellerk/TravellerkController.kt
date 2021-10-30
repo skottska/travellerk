@@ -1,24 +1,19 @@
 package se.skoosh.travellerk
 
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
-import se.skoosh.travellerk.model.Continent
-import se.skoosh.travellerk.model.Country
-import se.skoosh.travellerk.model.Visit
-import se.skoosh.travellerk.service.TravellerService
-import kotlin.math.log
-import org.slf4j.LoggerFactory
+import org.springframework.web.bind.annotation.*
 
 @Controller
 class TravellerController(val travellerService: TravellerService) {
 
-    private val logger = LoggerFactory.getLogger(TravellerController::class.java);
+    private val logger = LoggerFactory.getLogger(TravellerController::class.java)
 
     @GetMapping("/")
     fun showVisits(model: Model): String {
-        model.addAttribute("visits", travellerService.findVisits())
+        model.addAttribute("futureVisits", travellerService.convertVisits(travellerService.futureVisits()))
+        model.addAttribute("pastVisits", travellerService.convertVisits(travellerService.pastVisits()))
         return "index"
     }
 
@@ -50,5 +45,24 @@ class TravellerController(val travellerService: TravellerService) {
     fun map(model: Model): String {
         model.addAttribute("map", travellerService.map())
         return "map"
+    }
+
+    @GetMapping("/add")
+    fun add(model: Model): String {
+        model.addAttribute("countries", travellerService.findCountries())
+        return "add"
+    }
+
+    @PostMapping("/add")
+    fun addPost(model: Model, @RequestParam body: Map<String, String>): String {
+        model.addAttribute("countries", travellerService.findCountries())
+        model.addAttribute("result", travellerService.addVisit(body["country"], body["startDate"], body["endDate"]))
+        return "add"
+    }
+
+    @GetMapping("/delete/{id}")
+    fun delete(model: Model, @PathVariable id: String): String {
+        travellerService.deleteVisit(id)
+        return "redirect:/"
     }
 }

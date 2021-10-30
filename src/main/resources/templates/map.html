@@ -13,11 +13,18 @@
             data.addColumn('string', 'Country');
             data.addColumn('number', 'Been');
 
-            var countries = /*[[${map.countries}]]*/ null;
-            for(var i = 0, size = countries.length; i < size ; i++) {
-                var country = countries[i];
+            var pastCountries = /*[[${map.pastCountries}]]*/ null;
+            for(var i = 0, size = pastCountries.length; i < size ; i++) {
+                var country = pastCountries[i];
 			    data.setValue(i, 0, country);
 			    data.setValue(i, 1, 200);
+            }
+
+            var futureCountries = /*[[${map.futureCountries}]]*/ null;
+            for(var i = 0, size = futureCountries.length; i < size ; i++) {
+                var country = futureCountries[i];
+			    data.setValue(i, 0, country);
+			    data.setValue(i, 1, 0);
             }
 
             var options = {
