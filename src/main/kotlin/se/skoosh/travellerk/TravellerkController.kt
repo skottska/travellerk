@@ -12,8 +12,16 @@ class TravellerController(val travellerService: TravellerService) {
 
     @GetMapping("/")
     fun showVisits(model: Model): String {
-        model.addAttribute("futureVisits", travellerService.convertVisits(travellerService.futureVisits()))
-        model.addAttribute("pastVisits", travellerService.convertVisits(travellerService.pastVisits()))
+        val future = travellerService.futureVisits()
+        val past = travellerService.pastVisits()
+
+        val pastCountries = past.map { visit -> visit.country }.distinct()
+        val futureCountries = future.map { visit -> visit.country }.distinct().filter { !pastCountries.contains(it) }
+
+        model.addAttribute("numFuture", futureCountries.size)
+        model.addAttribute("numPast", pastCountries.size)
+        model.addAttribute("futureVisits", travellerService.convertVisits(future))
+        model.addAttribute("pastVisits", travellerService.convertVisits(past))
         return "index"
     }
 

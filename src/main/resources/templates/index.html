@@ -7,6 +7,8 @@
     <div class="row">
         <div class="col-md-6">
             <h2 class="my-5">Visits</h2>
+            <p th:text="'Number of countries visited: ' + ${numPast}"></p>
+            <p th:text="'Number of new countries planned: ' + ${numFuture}"></p>
             <table class="table table-striped table-responsive-md">
                 <thead>
                 <tr>
