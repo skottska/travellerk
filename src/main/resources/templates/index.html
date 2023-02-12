@@ -21,8 +21,8 @@
                 </thead>
                 <tbody>
                     <tr th:each="visit : ${futureVisits}">
-                        <td><img th:src="@{${'/images/countries/' + visit.country + '.png'}}"/></td>
-                        <td th:text="${visit.country}"></td>
+                        <td><img th:src="@{${'/images/countries/' + visit.name + '.png'}}"/></td>
+                        <td th:text="${visit.name}"></td>
                         <td th:text="${visit.startDate}"></td>
                         <td th:text="${visit.endDate}"></td>
                         <td><a th:href="@{/delete/{id}(id=${visit.id})}"><img src="/images/x.png"/></a></td>
@@ -37,8 +37,8 @@
                     </tr>
 
                     <tr th:each="visit : ${pastVisits}">
-                        <td><img th:src="@{${'/images/countries/' + visit.country + '.png'}}"/></td>
-                        <td th:text="${visit.country}"></td>
+                        <td><img th:src="@{${'/images/countries/' + visit.name + '.png'}}"/></td>
+                        <td th:text="${visit.name}"></td>
                         <td th:text="${visit.startDate}"></td>
                         <td th:text="${visit.endDate}"></td>
                         <td><a th:href="@{/delete/{id}(id=${visit.id})}"><img src="/images/x.png"/></a></td>

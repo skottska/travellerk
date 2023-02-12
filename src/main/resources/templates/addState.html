@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/header :: header">&nbsp;</head>
+<head>
+    <script>
+      $( function() {
+        $( "#startDate" ).datepicker({ dateFormat: 'yy-mm-dd', firstDay: 1 });
+        $( "#endDate" ).datepicker({ dateFormat: 'yy-mm-dd', firstDay: 1 });
+      } );
+  </script>
+</head>
+<body>
+<div th:replace="fragments/menu :: menu">&nbsp;</div>
+<div class="container my-5">
+    <h2 class="my-5">Add state visits</h2>
+    <form action="/addState" method="post">
+        <p>State
+            <select name="state" >
+                <option th:each="state : ${states}" th:value="${state.id}" th:text="${state.stateName}"></option>
+            </select>
+
+        </p>
+        <p>Start date: <input type="text" name="startDate" id="startDate" autocomplete="off"></p>
+        <p>End date: <input type="text" name="endDate" id="endDate" autocomplete="off"></p>
+        <input type="submit"/>
+    </form>
+    <p>Result: [[${result}]]</p>
+</div>
+</body>
+</html>

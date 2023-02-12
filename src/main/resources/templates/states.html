@@ -7,24 +7,23 @@
     <div class="row">
         <div class="col-md-6">
             <div>
-                <h2 class="my-5">Continents</h2>
+                <h2 class="my-5">States</h2>
                 <table class="table table-striped table-responsive-md">
                     <thead>
                     <tr>
-                        <th>Continents</th>
-                        <th>Summary</th>
                         <th>Countries</th>
+                        <th>Summary</th>
+                        <th>States</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="continentRow : ${continents}">
-                            <td th:text="${continentRow.continent}"></td>
-                            <td th:text="${continentRow.summary()}"></td>
+                        <tr th:each="countryRow : ${countries}">
+                            <td th:text="${countryRow.country}"></td>
+                            <td th:text="${countryRow.summary()}"></td>
                             <td>
-                                <div th:each="country : ${continentRow.visitedCountries}">
-                                    <img th:src="@{${'/images/countries/' + country.country + '.png'}}"/>
-                                    <span th:if="${country.visited}"><b th:text="${country.country}"></b></span>
-                                    <span th:unless="${country.visited}" th:text="${country.country}"></span>
+                                <div th:each="state : ${countryRow.visitedStates}">
+                                    <span th:if="${state.visited}"><b th:text="${state.state}"></b></span>
+                                    <span th:unless="${state.visited}" th:text="${state.state}"></span>
                                 </div>
                             </td>
                         </tr>
