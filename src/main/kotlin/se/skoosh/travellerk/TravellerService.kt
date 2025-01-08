@@ -99,7 +99,8 @@ class TravellerService(val continentRepo: ContinentRepo, val countryRepo: Countr
                 year = year,
                 totalVisits = visitsByYear.getOrDefault(year, emptyList()).size,
                 newVisits = newVisits.getOrDefault(year, 0),
-                totalDays = visitsByYear.getOrDefault(year, emptyList()).sumOf { visit -> visit.visitLengthWithinYear(year) }
+                totalDays = visitsByYear.getOrDefault(year, emptyList()).sumOf { visit -> visit.visitLengthWithinYear(year) },
+                distinctCountries = visitsByYear.getOrDefault(year, emptyList()).map { it.country }.toSet().size
         ) }
     }
 
@@ -194,7 +195,7 @@ data class NumberOfVisits(val number: Int, val countries: List<String>)
 data class VisitedCountry(val country: String, val visited: Boolean)
 data class VisitedState(val state: String, val visited: Boolean)
 data class VisitView(val id: Int, val startDate: String, val endDate: String, val name: String)
-data class YearView(val year: Int, val totalVisits: Int, val newVisits: Int, val totalDays: Int)
+data class YearView(val year: Int, val totalVisits: Int, val newVisits: Int, val totalDays: Int, val distinctCountries: Int)
 
 data class VisitedContinent(val continent: String, val visitedCountries: List<VisitedCountry>) {
     fun summary() = "" + visitedCountries.filter { it.visited }.size + "/" + visitedCountries.size

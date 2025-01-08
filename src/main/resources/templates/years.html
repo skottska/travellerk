@@ -14,6 +14,7 @@
                         <th>Year</th>
                         <th>Total Visits</th>
                         <th>New Visits</th>
+                        <th>Distinct countries</th>
                         <th>Total Days</th>
                     </tr>
                     </thead>
@@ -22,6 +23,7 @@
                             <td th:text="${year.year}"></td>
                             <td th:text="${year.totalVisits}"></td>
                             <td th:text="${year.newVisits}"></td>
+                            <td th:text="${year.distinctCountries}"></td>
                             <td th:text="${year.totalDays}"></td>
                         </tr>
                     </tbody>
